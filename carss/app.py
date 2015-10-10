@@ -19,7 +19,7 @@ def recent_feed():
     try:
         feed = AtomFeed('Recent Cars',
                         feed_url=request.url, url=request.url_root)
-        cars = Car.select().order_by(Car.updated).limit(15)
+        cars = Car.select().order_by(Car.updated.desc()).limit(15)
         for car in cars:
             html = render_template('layout.html',
                                     **model_to_dict(car)
