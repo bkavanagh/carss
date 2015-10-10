@@ -20,12 +20,10 @@ def recent_feed():
         feed = AtomFeed('Recent Cars',
                         feed_url=request.url, url=request.url_root)
         cars = Car.select().order_by(Car.updated).limit(15)
-        print cars
         for car in cars:
             html = render_template('layout.html',
                                     **model_to_dict(car)
                                    )
-            print html
             feed.add(car.title,
                      unicode(html),
                      id=car.id,
@@ -34,7 +32,7 @@ def recent_feed():
                      url=car.link)
         return feed.get_response()
     except Exception as ex:
-        print ex
+        return ex
 
 @app.route('/')
 def home():
